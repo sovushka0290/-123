@@ -168,15 +168,15 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
   ];
 
   return (
-    <div className="max-w-4xl mx-auto py-6" id="threat-checker-view">
+    <div className="max-w-4xl mx-auto py-4" id="threat-checker-view">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 text-bee-yellow rounded-full border border-yellow-500/20 text-sm font-mono mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-400/10 text-yellow-400 rounded-full border border-yellow-400/20 text-xs font-mono font-bold mb-3">
           <Sparkles className="w-4 h-4" /> ИНТЕЛЛЕКТУАЛЬНЫЙ СКАНИРУЮЩИЙ МОДУЛЬ
         </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold font-display tracking-tight text-white mb-2">
+        <h1 className="text-3xl md:text-4xl font-extrabold font-display tracking-tight text-white mb-2 leading-none">
           Анализатор Угроз безопасности
         </h1>
-        <p className="text-gray-400 text-sm md:text-base max-w-xl mx-auto">
+        <p className="text-slate-400 text-xs md:text-sm max-w-xl mx-auto leading-relaxed">
           Автоматический алгоритм анализирует текст сообщений на наличие уловок социальной инженерии, фишинговых шаблонов доменов и признаков психологического давления.
         </p>
       </div>
@@ -184,54 +184,56 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* presets panel */}
         <div className="lg:col-span-1 flex flex-col gap-4">
-          <div className="bg-bee-dark/80 rounded-2xl p-5 border border-bee-border">
-            <h3 className="font-semibold text-white mb-3 text-sm flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-bee-yellow" /> Примеры для тестирования
+          <div className="ios-glass rounded-2xl p-5 border border-white/5">
+            <h3 className="font-bold text-white mb-3 text-xs tracking-wider uppercase flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400" /> Примеры для тестирования
             </h3>
-            <p className="text-xs text-gray-400 mb-4 leading-relaxed">
+            <p className="text-[11px] text-slate-400 mb-4 leading-relaxed">
               Выберите один из частых шаблонов мошенничества, чтобы быстро протестировать экспертный анализ системы:
             </p>
             <div className="flex flex-col gap-2.5">
               {presets.map((p, idx) => (
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02, x: 2 }}
+                  whileTap={{ scale: 0.98 }}
                   key={idx}
                   onClick={() => loadPreset(p.text)}
-                  className="w-full text-left p-3 rounded-xl bg-bee-black hover:bg-bee-card border border-white/5 hover:border-bee-yellow/40 transition text-xs text-gray-300 flex flex-col gap-1 cursor-pointer"
+                  className="w-full text-left p-3 rounded-xl bg-slate-950 hover:bg-slate-900 border border-white/5 hover:border-yellow-400/30 ios-transition text-xs text-slate-300 flex flex-col gap-1 cursor-pointer"
                 >
-                  <span className="font-bold text-bee-yellow">{p.label}</span>
-                  <span className="text-gray-400 line-clamp-1">{p.text}</span>
-                </button>
+                  <span className="font-bold text-yellow-400">{p.label}</span>
+                  <span className="text-slate-500 line-clamp-1">{p.text}</span>
+                </motion.button>
               ))}
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-bee-dark to-yellow-950/20 rounded-2xl p-5 border border-bee-yellow/20">
-            <h4 className="font-bold text-bee-yellow text-sm mb-2 flex items-center gap-2">
+          <div className="bg-gradient-to-br from-slate-950 to-yellow-950/15 rounded-2xl p-5 border border-yellow-400/20">
+            <h4 className="font-bold text-yellow-400 text-xs mb-2 flex items-center gap-2">
               🛡️ Как работает сканирование?
             </h4>
-            <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside">
-              <li>Поиск подозрительных субдоменов</li>
-              <li>Проверка доменных зон из группы риска</li>
-              <li>Маркеры избыточного давления</li>
-              <li>Выявление триггеров кражи CVC / СМС</li>
+            <ul className="text-[11px] text-slate-300 space-y-2 list-none text-justify leading-relaxed">
+              <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-yellow-400 rounded-full shrink-0"></span> Поиск подозрительных субдоменов</li>
+              <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-yellow-400 rounded-full shrink-0"></span> Проверка доменных зон риска</li>
+              <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-yellow-400 rounded-full shrink-0"></span> Маркеры избыточного давления</li>
+              <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-yellow-400 rounded-full shrink-0"></span> Выявление триггеров кражи CVC/СМС</li>
             </ul>
           </div>
         </div>
 
         {/* main interactive terminal */}
-        <div className="lg:col-span-2 flex flex-col bg-bee-dark rounded-2xl border border-bee-border overflow-hidden glow-yellow h-[550px]">
+        <div className="lg:col-span-2 flex flex-col ios-glass rounded-2xl overflow-hidden glow-yellow h-[550px]">
           {/* Chat header */}
-          <div className="bg-bee-black/90 p-4 border-b border-bee-border flex justify-between items-center">
+          <div className="bg-slate-950/80 p-4 border-b border-white/5 flex justify-between items-center">
             <div className="flex items-center gap-2.5">
               <div className="relative">
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-bee-dark"></span>
-                <div className="w-8 h-8 rounded-lg bg-bee-yellow text-bee-black flex items-center justify-center font-bold text-sm">
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-950"></span>
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-500 text-slate-950 flex items-center justify-center font-black text-sm shadow-[0_0_12px_rgba(250,204,21,0.2)]">
                   🐝
                 </div>
               </div>
               <div>
-                <div className="text-xs font-mono text-gray-400">АНАЛИТИЧЕСКИЙ БОТ</div>
-                <div className="text-sm font-bold text-white">SunBee Threat Scanner V4</div>
+                <div className="text-[9px] font-mono text-slate-400 tracking-wider">АНАЛИТИЧЕСКИЙ БОТ</div>
+                <div className="text-xs font-bold text-white">SunBee Threat Scanner V4</div>
               </div>
             </div>
             <button
@@ -245,7 +247,7 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
                   }
                 ]);
               }}
-              className="p-1.5 hover:bg-bee-card rounded-lg text-gray-400 hover:text-white transition cursor-pointer"
+              className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition cursor-pointer"
               title="Очистить историю"
             >
               <RefreshCw className="w-4 h-4" />
@@ -253,18 +255,20 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
           </div>
 
           {/* scrollable message viewport */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 font-sans text-sm">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 font-sans text-sm scrollbar-thin">
             <AnimatePresence initial={false}>
               {history.map((m) => (
                 <div
                   key={m.id}
                   className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
                 >
-                  <div
-                    className={`max-w-[85%] rounded-2xl p-4 leading-relaxed ${
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    className={`max-w-[85%] rounded-2xl p-4 leading-relaxed text-xs sm:text-sm ${
                       m.sender === 'user'
-                        ? 'bg-bee-yellow text-bee-black font-semibold rounded-tr-none'
-                        : 'bg-bee-black text-gray-100 border border-bee-border rounded-tl-none'
+                        ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 font-semibold rounded-tr-none shadow-md shadow-yellow-400/5'
+                        : 'bg-slate-950/60 text-slate-100 border border-white/5 rounded-tl-none'
                     }`}
                   >
                     <div>{m.text}</div>
@@ -279,10 +283,10 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
                       >
                         {/* Risk progress meter */}
                         <div>
-                          <div className="flex justify-between items-center text-xs font-mono mb-1">
-                            <span className="text-gray-400">ВЕРОЯТНОСТЬ МОШЕННИЧЕСТВА:</span>
+                          <div className="flex justify-between items-center text-[10px] font-mono mb-1.5">
+                            <span className="text-slate-400">ВЕРОЯТНОСТЬ МОШЕННИЧЕСТВА:</span>
                             <span
-                              className={`font-bold ${
+                              className={`font-black ${
                                 m.analysisResults.riskScore >= 70
                                   ? 'text-red-400'
                                   : m.analysisResults.riskScore >= 35
@@ -293,7 +297,7 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
                               {m.analysisResults.riskScore}%
                             </span>
                           </div>
-                          <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                          <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                             <div
                               className={`h-full transition-all duration-1000 ${
                                 m.analysisResults.riskScore >= 70
@@ -309,15 +313,15 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
 
                         {/* Verdict container */}
                         <div
-                          className={`p-3 rounded-xl text-xs font-medium border ${
+                          className={`p-3 rounded-xl text-xs font-semibold border ${
                             m.analysisResults.riskScore >= 70
-                              ? 'bg-red-950/40 border-red-500/20 text-red-200'
+                              ? 'bg-red-950/20 border-red-500/20 text-red-200'
                               : m.analysisResults.riskScore >= 35
-                              ? 'bg-amber-950/40 border-amber-500/20 text-amber-200'
-                              : 'bg-emerald-950/40 border-emerald-500/20 text-emerald-200'
+                              ? 'bg-amber-950/20 border-amber-500/20 text-amber-200'
+                              : 'bg-emerald-950/20 border-emerald-500/20 text-emerald-200'
                           }`}
                         >
-                          <div className="flex gap-2 items-start text-xs md:text-sm">
+                          <div className="flex gap-2 items-start text-xs">
                             <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
                             <span>{m.analysisResults.verdict}</span>
                           </div>
@@ -325,11 +329,11 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
 
                         {/* Found Indicators */}
                         <div>
-                          <div className="text-xs font-mono text-gray-400 mb-1.5 uppercase">Выявленные индикаторы угрозы:</div>
+                          <div className="text-[10px] font-mono text-slate-500 mb-1.5 uppercase tracking-wide">Выявленные индикаторы угрозы:</div>
                           <div className="space-y-1">
                             {m.analysisResults.detectedTriggers.map((trig, tIdx) => (
-                              <div key={tIdx} className="text-xs flex gap-2 items-center text-gray-300">
-                                <span className="w-1.5 h-1.5 bg-bee-yellow rounded-full"></span>
+                              <div key={tIdx} className="text-xs flex gap-2 items-center text-slate-300">
+                                <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></span>
                                 <span>{trig}</span>
                               </div>
                             ))}
@@ -338,10 +342,10 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
 
                         {/* Practical Recommendations */}
                         <div>
-                          <div className="text-xs font-mono text-gray-400 mb-1.5 uppercase">Экспертные рекомендации:</div>
-                          <div className="space-y-1 bg-bee-dark/40 p-3 rounded-xl border border-white/5">
+                          <div className="text-[10px] font-mono text-slate-500 mb-1.5 uppercase tracking-wide">Экспертные рекомендации:</div>
+                           <div className="space-y-1 bg-slate-900/60 p-3 rounded-xl border border-white/5">
                             {m.analysisResults.recommendations.map((rec, rIdx) => (
-                              <div key={rIdx} className="text-xs flex gap-2 items-start text-gray-300">
+                              <div key={rIdx} className="text-xs flex gap-2 items-start text-slate-300">
                                 <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                                 <span>{rec}</span>
                               </div>
@@ -353,22 +357,22 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
                         <div className="pt-2 flex justify-between items-center">
                           <button
                             onClick={() => onSelectCategory('catalog')}
-                            className="text-xs text-bee-yellow hover:text-white font-medium flex items-center gap-1 hover:underline cursor-pointer"
+                            className="text-xs text-yellow-400 hover:text-yellow-300 font-bold flex items-center gap-1 hover:underline cursor-pointer transition-all"
                           >
-                            Посмотреть каталог схем <ArrowRight className="w-3 h-3" />
+                            Посмотреть каталог схем <ArrowRight className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </motion.div>
                     )}
-                  </div>
-                  <span className="text-[10px] text-gray-500 mt-1 px-1 font-mono">{m.time}</span>
+                  </motion.div>
+                  <span className="text-[9px] text-slate-500 mt-1 px-1 font-mono">{m.time}</span>
                 </div>
               ))}
 
               {analyzing && (
                 <div className="flex flex-col items-start">
-                  <div className="bg-bee-black text-gray-300 rounded-2xl rounded-tl-none p-4 border border-bee-border flex items-center gap-3">
-                    <RefreshCw className="w-4 h-4 text-bee-yellow animate-spin" />
+                  <div className="bg-slate-950/60 text-slate-400 rounded-2xl rounded-tl-none p-4 border border-white/5 flex items-center gap-3">
+                    <RefreshCw className="w-4 h-4 text-yellow-400 animate-spin" />
                     <span className="text-xs font-mono">Цифровая лаборатория анализирует текст...</span>
                   </div>
                 </div>
@@ -377,25 +381,27 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
           </div>
 
           {/* Form input field at bottom */}
-          <form onSubmit={handleAnalyze} className="p-4 bg-bee-black/90 border-t border-bee-border flex gap-2.5">
+          <form onSubmit={handleAnalyze} className="p-4 bg-slate-950/80 border-t border-white/5 flex gap-2.5">
             <input
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               disabled={analyzing}
               placeholder="Вставьте СМС, ссылку или текст сообщения здесь..."
-              className="flex-1 bg-bee-dark border border-bee-border focus:border-bee-yellow rounded-xl py-3 px-4 text-sm text-white focus:outline-none placeholder-gray-500 min-w-0"
+              className="flex-1 bg-slate-900 border border-white/5 focus:border-yellow-400 rounded-xl py-3 px-4 text-xs sm:text-sm text-white focus:outline-none placeholder-slate-500 min-w-0"
               required
             />
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={analyzing || !inputText.trim()}
-              className="bg-bee-yellow disabled:bg-bee-dark disabled:text-gray-600 disabled:border-white/5 text-bee-black font-bold px-5 py-3 rounded-xl hover:bg-bee-yellow-light transition text-sm flex items-center gap-2 cursor-pointer shrink-0 border border-transparent"
+              className="bg-gradient-to-r from-yellow-400 to-amber-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-600 disabled:border-white/5 text-slate-950 font-extrabold px-5 py-3 rounded-xl hover:bg-yellow-300 transition text-sm flex items-center gap-2 cursor-pointer shrink-0 border border-transparent"
               id="analyze-threat-button"
             >
               <SearchCheck className="w-4 h-4" />
               <span className="hidden sm:inline">Сканировать</span>
-            </button>
+            </motion.button>
           </form>
         </div>
       </div>

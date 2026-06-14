@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, TrendingUp, AlertTriangle, ArrowRight, Newspaper, Terminal, HelpCircle, ShieldAlert, CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { NewsArticle, FraudScheme } from '../types';
 
 interface HomeViewProps {
@@ -59,69 +59,74 @@ export default function HomeView({ news, schemes, setActiveTab, onSelectArticle,
   };
 
   return (
-    <div className="space-y-12 py-6" id="home-view">
+    <div className="space-y-12 py-4" id="home-view">
       {/* 1. Hero Showcase Container */}
-      <section className="relative rounded-3xl overflow-hidden py-16 px-6 md:px-12 bg-gradient-to-br from-bee-dark via-bee-black to-yellow-950/20 border border-bee-border glow-yellow">
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', duration: 0.8 }}
+        className="relative rounded-3xl overflow-hidden py-16 px-6 md:px-12 bg-gradient-to-br from-slate-950 via-slate-900 to-yellow-950/15 border border-bee-border glow-yellow"
+      >
         {/* Background visual effect */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-bee-yellow/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-yellow-400/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 text-bee-yellow rounded-full border border-yellow-500/20 text-xs font-mono">
-            <span className="flex h-2 w-2 rounded-full bg-bee-yellow animate-pulse"></span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-400/10 text-yellow-400 rounded-full border border-yellow-400/20 text-xs font-mono font-bold">
+            <span className="flex h-2 w-2 rounded-full bg-yellow-400 animate-pulse"></span>
             ЗАПУЩЕНА ВЕБ-ПЛАТФОРМА SUNBEE v2.0
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-extrabold font-display leading-[1.1] tracking-tight text-white">
-            Купол безопасности для вашей <span className="text-transparent bg-clip-text bg-gradient-to-r from-bee-yellow to-amber-300">цифровой жизни</span>
+          <h1 className="text-4xl md:text-6xl font-black font-display leading-[1.1] tracking-tight text-white">
+            Купол безопасности для вашей <span className="text-gradient-gold">цифровой жизни</span>
           </h1>
 
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-2xl">
+          <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl">
             SunBee — это современный интеллектуальный щит против фишинга, телефонного давления и утечек данных. Мы собираем актуальные схемы киберугроз, обучаем методам самозащиты и помогаем распознать опасность в один клик.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setActiveTab('checker')}
-              className="bg-bee-yellow text-bee-black font-extrabold px-6 py-3.5 rounded-xl hover:bg-bee-yellow-light transition hover:shadow-lg hover:shadow-yellow-500/10 flex items-center gap-2 text-sm cursor-pointer"
+              className="bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 font-black px-6 py-3.5 rounded-xl transition duration-300 shadow-lg shadow-yellow-500/10 flex items-center gap-2 text-sm cursor-pointer"
             >
               <ShieldAlert className="w-5 h-5" /> Проверить СМС или Ссылку
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03, backgroundColor: 'rgba(255,255,255,0.08)' }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setActiveTab('quiz')}
-              className="bg-white/5 border border-white/10 hover:bg-white/10 text-white font-semibold px-6 py-3.5 rounded-xl transition text-sm flex items-center gap-2 cursor-pointer"
+              className="bg-white/5 border border-white/10 text-white font-semibold px-6 py-3.5 rounded-xl transition text-sm flex items-center gap-2 cursor-pointer"
             >
-              Пройти интерактивный тест <ArrowRight className="w-4 h-4 text-bee-yellow" />
-            </button>
+              Пройти интерактивный тест <ArrowRight className="w-4 h-4 text-yellow-400" />
+            </motion.button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 2. Live Cybercrime Statistics Dashboard */}
       <section className="grid grid-cols-1 md:grid-cols-4 gap-4" id="stats-grid">
-        <div className="bg-bee-dark/70 border border-bee-border p-6 rounded-2xl flex flex-col justify-between">
-          <div className="text-xs font-mono text-gray-500 uppercase">Потери граждан в РФ</div>
-          <div className="text-3xl font-bold font-display text-red-400 my-2">156 млрд ₽</div>
-          <p className="text-xs text-justify text-gray-400">Сумма похищенных средств злоумышленниками методами социальной инженерии за прошлый год.</p>
-        </div>
-        
-        <div className="bg-bee-dark/70 border border-bee-border p-6 rounded-2xl flex flex-col justify-between">
-          <div className="text-xs font-mono text-gray-500 uppercase">Основной канал угроз</div>
-          <div className="text-3xl font-bold font-display text-bee-yellow my-2">84% звонков</div>
-          <p className="text-xs text-justify text-gray-400">Переместились в мессенджеры Telegram, WhatsApp и Viber под масками Госуслуг и сотрудников ЦБ.</p>
-        </div>
-
-        <div className="bg-bee-dark/70 border border-bee-border p-6 rounded-2xl flex flex-col justify-between">
-          <div className="text-xs font-mono text-gray-500 uppercase">Новые поддельные домены</div>
-          <div className="text-3xl font-bold font-display text-amber-500 my-2">&gt; 12 000 в сутки</div>
-          <p className="text-xs text-justify text-gray-400">Фишинговых страниц создается ежедневно для обмана покупателей на маркетплейсах.</p>
-        </div>
-
-        <div className="bg-bee-dark/70 border border-bee-border p-6 rounded-2xl flex flex-col justify-between">
-          <div className="text-xs font-mono text-gray-500 uppercase">Эффективность СМС-кодов</div>
-          <div className="text-3xl font-bold font-display text-emerald-400 my-2">92% взломов</div>
-          <p className="text-xs text-justify text-gray-400">Происходят из-за добровольной передачи СМС-кода третьим лицам под психологическим манипулированием.</p>
-        </div>
+        {[
+          { title: 'Потери граждан в РФ', value: '156 млрд ₽', desc: 'Сумма похищенных средств злоумышленниками методами социальной инженерии за прошлый год.', color: 'text-rose-400' },
+          { title: 'Основной канал угроз', value: '84% звонков', desc: 'Переместились в мессенджеры Telegram, WhatsApp и Viber под масками Госуслуг и сотрудников ЦБ.', color: 'text-yellow-400' },
+          { title: 'Новые поддельные домены', value: '> 12 000 в сутки', desc: 'Фишинговых страниц создается ежедневно для обмана покупателей на маркетплейсах.', color: 'text-amber-500' },
+          { title: 'Эффективность СМС-кодов', value: '92% взломов', desc: 'Происходят из-за добровольной передачи СМС-кода третьим лицам под психологическим манипулированием.', color: 'text-emerald-400' }
+        ].map((card, idx) => (
+          <motion.div 
+            key={idx}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1, type: 'spring' }}
+            whileHover={{ y: -5, scale: 1.02 }}
+            className="ios-card p-6 rounded-2xl flex flex-col justify-between cursor-default"
+          >
+            <div className="text-[10px] font-mono tracking-wider text-slate-500 uppercase">{card.title}</div>
+            <div className={`text-2xl md:text-3xl font-black font-display ${card.color} my-3`}>{card.value}</div>
+            <p className="text-[11px] text-justify text-slate-400 leading-normal">{card.desc}</p>
+          </motion.div>
+        ))}
       </section>
 
       {/* 3. Hot Threats & Quick Evaluation Calculator */}
@@ -131,121 +136,143 @@ export default function HomeView({ news, schemes, setActiveTab, onSelectArticle,
         <div className="lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center border-b border-white/5 pb-3">
             <h2 className="text-xl md:text-2xl font-bold font-display text-white flex items-center gap-2">
-              <AlertTriangle className="text-bee-yellow w-5 h-5 animate-pulse" /> Экстренные Предупреждения Угроз
+              <AlertTriangle className="text-yellow-400 w-5 h-5 animate-pulse" /> Экстренные Предупреждения Угроз
             </h2>
             <button
               onClick={() => setActiveTab('news')}
-              className="text-xs text-bee-yellow hover:text-white font-mono hover:underline cursor-pointer"
+              className="text-xs text-yellow-400 hover:text-white font-mono hover:underline cursor-pointer transition-colors duration-200"
             >
-              Смотреть все новости ({(news.length)})
+              Смотреть все новости ({news.length})
             </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {news.slice(0, 2).map((item) => (
-              <div 
+            {news.slice(0, 2).map((item, idx) => (
+              <motion.div 
                 key={item.id}
-                className="bg-bee-dark hover:bg-bee-dark/90 border border-bee-border rounded-xl p-5 flex flex-col justify-between hover:border-bee-yellow/40 transition-all group"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.15 }}
+                className="ios-card rounded-2xl p-5 flex flex-col justify-between group cursor-default"
               >
                 <div>
                   <div className="flex justify-between items-start mb-3">
-                    <span className="px-2 py-0.5 bg-red-500/10 text-red-400 rounded-md text-[10px] font-mono border border-red-500/20 uppercase font-semibold">
+                    <span className="px-2 py-0.5 bg-red-500/10 text-red-400 rounded-md text-[9px] font-mono border border-red-500/20 uppercase font-bold">
                       {item.tag}
                     </span>
-                    <span className="text-[10px] text-gray-500 font-mono">{item.date}</span>
+                    <span className="text-[10px] text-slate-500 font-mono">{item.date}</span>
                   </div>
-                  <h3 className="text-md font-bold text-white mb-2 group-hover:text-bee-yellow transition leading-snug">
+                  <h3 className="text-md font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors duration-300 leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-gray-400 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
                     {item.summary}
                   </p>
                 </div>
                 
                 <button
                   onClick={() => onSelectArticle(item)}
-                  className="mt-4 pt-3 border-t border-white/5 text-xs text-bee-yellow font-bold hover:text-white flex items-center justify-between cursor-pointer"
+                  className="mt-4 pt-3 border-t border-white/5 text-xs text-yellow-400 font-bold hover:text-white flex items-center justify-between cursor-pointer ios-transition"
                 >
-                  Читать подробный разбор защиты <ArrowRight className="w-3 h-3 text-bee-yellow" />
+                  Читать подробный разбор защиты <ArrowRight className="w-3.5 h-3.5 text-yellow-400 group-hover:translate-x-1 transition-transform" />
                 </button>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Quick link categories */}
-          <div className="bg-bee-dark/40 border border-bee-border rounded-2xl p-6">
-            <h3 className="text-sm font-semibold text-white mb-3">Угрозы по типам мошенничества:</h3>
+          <div className="ios-glass rounded-2xl p-6">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Угрозы по типам мошенничества:</h3>
             <div className="flex flex-wrap gap-2.5">
               {schemes.map((sch) => (
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   key={sch.id}
                   onClick={() => onSelectScheme(sch)}
-                  className="px-3.5 py-2 rounded-xl bg-bee-black hover:bg-bee-card text-xs text-gray-300 border border-white/5 hover:border-bee-yellow/30 transition cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-xs text-slate-300 border border-white/5 hover:border-yellow-400/30 transition cursor-pointer font-medium"
                 >
                   🐝 {sch.name}
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
         </div>
 
         {/* Right 1 col: Risk Calculator */}
-        <div className="lg:col-span-1 bg-bee-dark/90 border border-bee-border rounded-2xl p-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-bee-yellow/5 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="lg:col-span-1 ios-glass rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between border border-white/5">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-yellow-400/5 rounded-full blur-2xl pointer-events-none"></div>
 
-          <h2 className="text-lg font-bold font-display text-white mb-1.5 flex items-center gap-2">
-            <ShieldCheck className="text-bee-yellow w-5 h-5" /> Экспресс Тест Риска
-          </h2>
-          <p className="text-xs text-gray-400 mb-5">
-            Узнайте вашу степень уязвимости перед профессиональными методами социальной инженерии за 40 секунд.
-          </p>
+          <div>
+            <h2 className="text-lg font-bold font-display text-white mb-1.5 flex items-center gap-2">
+              <ShieldCheck className="text-yellow-400 w-5 h-5 animate-pulse" /> Экспресс Тест Риска
+            </h2>
+            <p className="text-xs text-slate-400 mb-5 leading-normal">
+              Узнайте вашу степень уязвимости перед профессиональными методами социальной инженерии за 40 секунд.
+            </p>
 
-          <div className="bg-bee-black/60 p-4 rounded-xl border border-white/5 min-h-[160px] flex flex-col justify-between">
-            {calcResult === null ? (
-              <div>
-                <div className="flex justify-between text-[11px] font-mono text-gray-500 mb-2">
-                  <span>Вопрос {calcStep + 1} из {riskQuestions.length}</span>
-                  <span className="text-bee-yellow">Интерактивный расчет</span>
-                </div>
-                
-                <h4 className="text-xs md:text-sm font-semibold text-white mb-4">
-                  {riskQuestions[calcStep].text}
-                </h4>
+            <div className="bg-slate-950/60 p-4 rounded-xl border border-white/5 min-h-[220px] flex flex-col justify-between">
+              <AnimatePresence mode="wait">
+                {calcResult === null ? (
+                  <motion.div
+                    key={calcStep}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="flex justify-between text-[10px] font-mono text-slate-500 mb-2.5">
+                      <span>Вопрос {calcStep + 1} из {riskQuestions.length}</span>
+                      <span className="text-yellow-400">В реальном времени</span>
+                    </div>
+                    
+                    <h4 className="text-xs font-semibold text-white mb-4 leading-relaxed">
+                      {riskQuestions[calcStep].text}
+                    </h4>
 
-                <div className="space-y-2">
-                  {riskQuestions[calcStep].options.map((opt, oIdx) => (
+                    <div className="space-y-2">
+                      {riskQuestions[calcStep].options.map((opt, oIdx) => (
+                        <motion.button
+                          whileHover={{ scale: 1.01, x: 2 }}
+                          whileTap={{ scale: 0.99 }}
+                          key={oIdx}
+                          onClick={() => handleRiskAnswer(oIdx)}
+                          className="w-full text-left text-xs bg-slate-900/40 hover:bg-slate-800/80 p-2.5 rounded-lg text-slate-300 hover:text-white border border-white/5 hover:border-yellow-400/20 transition cursor-pointer"
+                        >
+                          {opt}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="result"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="space-y-4 text-center py-2"
+                  >
+                    <CheckCircle2 className="w-10 h-10 text-yellow-400 mx-auto animate-bounce" />
+                    <div>
+                      <h4 className="text-[10px] font-mono tracking-wider text-slate-500 uppercase">РЕЗУЛЬТАТ АУДИТА:</h4>
+                      <p className="text-xs text-slate-200 mt-2 leading-relaxed bg-slate-900/80 p-3 rounded-xl border border-white/5 text-justify">
+                        {calcResult}
+                      </p>
+                    </div>
                     <button
-                      key={oIdx}
-                      onClick={() => handleRiskAnswer(oIdx)}
-                      className="w-full text-left text-xs bg-bee-dark hover:bg-bee-card p-2.5 rounded-lg text-gray-300 hover:text-white border border-white/5 hover:border-bee-yellow/40 transition cursor-pointer"
+                      onClick={resetRiskCalc}
+                      className="text-xs font-mono text-yellow-400 hover:text-white border-b border-yellow-400 hover:border-white pb-0.5 cursor-pointer transition-all"
                     >
-                      {opt}
+                      Пройти заново
                     </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-4 text-center py-2">
-                <CheckCircle2 className="w-10 h-10 text-bee-yellow mx-auto animate-bounce" />
-                <div>
-                  <h4 className="text-xs font-mono text-gray-400 uppercase">РЕЗУЛЬТАТ АУДИТА:</h4>
-                  <p className="text-xs text-gray-200 font-semibold mt-1.5 leading-relaxed bg-bee-dark/80 p-3 rounded-xl border border-white/5 text-justify">
-                    {calcResult}
-                  </p>
-                </div>
-                <button
-                  onClick={resetRiskCalc}
-                  className="text-xs font-mono text-bee-yellow hover:text-white border-b border-bee-yellow hover:border-white pb-0.5 cursor-pointer"
-                >
-                  Пройти заново
-                </button>
-              </div>
-            )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className="mt-4 p-3 bg-red-500/5 text-red-400 text-[11px] rounded-lg border border-red-500/10 flex gap-2 items-start">
             <Terminal className="w-4 h-4 shrink-0 mt-0.5" />
-            <span>Методы манипуляций постоянно усложняются. Никакой искусственный интеллект не защитит вас лучше собственной бдительности.</span>
+            <span className="leading-tight">Методы манипуляций постоянно усложняются. Никакой искусственный интеллект не защитит вас лучше собственной бдительности.</span>
           </div>
 
         </div>
