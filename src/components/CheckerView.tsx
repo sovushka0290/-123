@@ -51,17 +51,21 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
         
         foundUrls.forEach(url => {
           const uLower = url.toLowerCase();
-          if (uLower.includes('sber') && !uLower.includes('sberbank.ru') && !uLower.includes('sber.ru')) {
+          if (uLower.includes('kaspi') && !uLower.includes('kaspi.kz')) {
             riskScore += 45;
-            detectedTriggers.push(`Подозрительный адрес, имитирующий Сбербанк: "${url}"`);
+            detectedTriggers.push(`Подозрительный адрес, имитирующий Kaspi.kz: "${url}"`);
           }
-          if (uLower.includes('gosuslugi') && !uLower.includes('gosuslugi.ru')) {
+          if (uLower.includes('halyk') && !uLower.includes('halykbank.kz')) {
             riskScore += 45;
-            detectedTriggers.push(`Подозрительный адрес, имитирующий Госуслуги: "${url}"`);
+            detectedTriggers.push(`Подозрительный адрес, имитирующий Halyk Bank: "${url}"`);
           }
-          if (uLower.includes('avito') && !uLower.includes('avito.ru')) {
+          if (uLower.includes('egov') && !uLower.includes('egov.kz')) {
+            riskScore += 45;
+            detectedTriggers.push(`Подозрительный адрес, имитирующий eGov.kz: "${url}"`);
+          }
+          if (uLower.includes('olx') && !uLower.includes('olx.kz')) {
             riskScore += 40;
-            detectedTriggers.push(`Подозрительный адрес, маскирующийся под Авито: "${url}"`);
+            detectedTriggers.push(`Подозрительный адрес, маскирующийся под OLX.kz: "${url}"`);
           }
           if (uLower.includes('t.me') && (uLower.includes('bot') || uLower.includes('join') || uLower.includes('find'))) {
             riskScore += 15;
@@ -102,9 +106,9 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
       }
 
       // 5. Boss / VIP status engineering
-      if (lower.includes('генеральный') || lower.includes('директор') || lower.includes('проверка') || lower.includes('курирует') || lower.includes('органы') || lower.includes('следователь') || lower.includes('фсб') || lower.includes('мвд')) {
+      if (lower.includes('генеральный') || lower.includes('директор') || lower.includes('проверка') || lower.includes('курирует') || lower.includes('органы') || lower.includes('следователь') || lower.includes('кнб') || lower.includes('афм') || lower.includes('мвд')) {
         riskScore += 25;
-        detectedTriggers.push('Имитация высокопоставленного руководства или силовых ведомств');
+        detectedTriggers.push('Имитация высокопоставленного руководства или силовых ведомств РК');
         recommendations.push('Обязательно свяжитесь со звонящим/пишущим через другой проверенный канал связи.');
       }
 
@@ -154,16 +158,16 @@ export default function CheckerView({ onSelectCategory }: { onSelectCategory: (c
 
   const presets = [
     {
-      label: 'СМС о доставке',
-      text: 'Ваша посылка от Почты задерживается на складе из-за отсутствия оплаты пошлины 14.50 руб. Оплатите до вечера во избежание возврата: post-ru-safe-pay.online'
+      label: 'Казпочта СМС',
+      text: 'Ваша посылка от Kazpost задерживается на складе из-за отсутствия оплаты таможенной пошлины в размере 450 тенге. Оплатите в течение суток во избежание списаний: kazpost-kz-pay.online'
     },
     {
-      label: 'Угроза "ФСБ"',
-      text: 'Здравствуйте, это Генеральный директор. В нашем ведомстве проводится внеплановый аудит ФСБ. С Вами сейчас свяжется куратор безопасности Силантьев Владислав Михайлович. Общаться только в Telegram.'
+      label: 'Угроза "КНБ"',
+      text: 'Здравствуйте, это Генеральный директор. В нашем ведомстве проводится внеплановая проверка КНБ. С Вами сейчас свяжется куратор национальной безопасности Малик Сакенович. Срочно перейдите в диалог в Telegram.'
     },
     {
-      label: 'Розыгрыш 50тыс',
-      text: 'Поздравляем! Вы вошли в топ-10 счастливчиков компании Теле2 и выиграли новый Смартфон или 50 000 руб! Пройдите верификацию карты и заберите приз: tele2-wheel.xyz'
+      label: 'Розыгрыш 50тыс ₸',
+      text: 'Поздравляем! Вы вошли в топ-20 счастливчиков компании Tele2 Kazakhstan и выиграли новый смартфон или 50 000 тенге на баланс! Пройдите верификацию карты: tele2-win.xyz'
     }
   ];
 
