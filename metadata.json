@@ -1,0 +1,6 @@
+{
+  "name": "SunBee",
+  "description": "Веб-платформа по кибербезопасности и противодействию мошенничеству: новости, база знаний, каталог угроз, интерактивные тесты и анализатор угроз.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
